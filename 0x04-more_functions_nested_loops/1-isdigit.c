@@ -1,14 +1,14 @@
-#include <main.h>
+#include "main.h"
 /**
- * this is the prototype ofn
- * int _isdigit(int c)
- * that return 1 if c is 0
- */
-int _isdigit(int c)
+*_isupper - function that verifies if a  character is uppercase or not
+*@c: tested character
+*Return: returns 1 if it is uppercase , 0 if not
+*/
+
+int _isupper(int c)
 {
-	if (c >= '0' && c <= '9')
-	{
-		return (1);
-	}
-	return (0);
+if ((c >= 'A') && (c <= 'Z'))
+return (1);
+
+return (0);
 }
