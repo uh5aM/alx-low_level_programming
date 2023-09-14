@@ -1,17 +1,17 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * mul -  checks for checks for a digit (0 through 9).
- * @a: a -  Variable
- * @b: b - variable
- * Return: Always 0.
+ * _isdigit - input
+ *
+ * Description: define if a character is a number
+ * @c: charater
+ * Return: 1 yes 0 no
  */
-int mul(int a, int b)
+
+int _isdigit(int c)
 {
-
-	int mul;
-
-	mul = a * b;
-
-	return (mul);
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }
