@@ -1,20 +1,25 @@
 #include "holberton.h"
-#include <stdio.h>
-
 /**
- * main - check the code for Holberton School students.
+ * _strchr - function that locates a character in a string
+ *@s: first value -char
+ *@c: second value - char
  *
- * Return: Always 0.
+ * Return: char with result
  */
-int main(void)
+char *_strchr(char *s, char c)
 {
-    char *s = "hello";
-    char *f;
 
-    	f = _strchr(s, 'l');
-	if (f != NULL)
-    	{
-        	printf("%s\n", f);
-    	}
-    	return (0);
+	if (*s == '\0')
+		return (s);
+	while (*s)
+	{
+		if (*s == c)
+		{
+			return (s);
+		}
+	       s++;
+	}
+	if (c == '\0')
+		return (s);
+	return ('\0');
 }
