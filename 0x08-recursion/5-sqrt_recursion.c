@@ -1,24 +1,32 @@
 #include "holberton.h"
-/*this is bout squre recursion im writing this code 
- * finding the squre root of  a function 
- * If n does not have a natural square root, the function should return -1
+
+/**
+ * my_sqrt_recursion - This is my my_sqrt_recursion
+ *                     function about the square root
+ * @a: The entry is equal to n, of the before function
+ * @b: This is the sum
+ *
+ * Return: This is the result
  */
-int _sqrt_recursion(int n)
+int my_sqrt_recursion(int a, int b)
 {
-	if (a == (b*b))
-		return(b);
+	if (a == (b * b))
+		return (b);
 	else if ((b * b) >= a)
 		return (-1);
 	else
-		return(my_sqrt_recursion(a, b + 1));
+		return (my_sqrt_recursion(a, b + 1));
 }
-/*my first function 
- * this is the first value assign
- * this result of my fuctionmy_sqr_recursion
+
+/**
+ * _sqrt_recursion - This is my first function
+ * @n: This is my value
+ *
+ * Return: This is my result of the function my_sqrt_recursion
  */
-int sqrt_recursion(int n)
+int _sqrt_recursion(int n)
 {
 	if (n <= 0)
-		return (-n);
+		return (-1);
 	return (my_sqrt_recursion(n, 0));
 }
