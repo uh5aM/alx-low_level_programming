@@ -1,89 +1,67 @@
-#include "main.h"
 #include <stdlib.h>
-#include <string.h>
+#include "main.h"  // Assuming main.h contains necessary function prototypes and includes
 
-int is_space(char c) {
-    return c == ' ' || c == '\t' || c == '\n';
+int len(char *str) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
+    }
+    return length;
 }
 
-char **strtow(char *str) {
-    if (str == NULL || *str == '\0') {
-        return NULL;
-    }
-
-    int word_count = 0;
+int num_words(char *str) {
+    int words = 0;
     int in_word = 0;
-    char **words = NULL;
-    char *word_start = NULL;
 
-    for (char *ptr = str; *ptr != '\0'; ptr++) {
-        if (is_space(*ptr)) {
+    for (int i = 0; i <= len(str); i++) {
+        if (str[i] == ' ' || str[i] == '\0') {
             if (in_word) {
-                in_word = 0;
-                word_count++;
-            }
-        } else {
-            if (!in_word) {
-                in_word = 1;
-                word_start = ptr;
-            }
-        }
-    }
-
-    if (in_word) {
-        word_count++;
-    }
-
-    words = (char **)malloc((word_count + 1) * sizeof(char *));
-    if (words == NULL) {
-        return NULL; // Memory allocation failed
-    }
-
-    in_word = 0;
-    int word_index = 0;
-    for (char *ptr = str; *ptr != '\0'; ptr++) {
-        if (is_space(*ptr)) {
-            if (in_word) {
-                int word_length = ptr - word_start;
-                words[word_index] = (char *)malloc((word_length + 1) * sizeof(char));
-                if (words[word_index] == NULL) {
-                    // Memory allocation failed
-                    for (int i = 0; i < word_index; i++) {
-                        free(words[i]);
-                    }
-                    free(words);
-                    return NULL;
-                }
-                strncpy(words[word_index], word_start, word_length);
-                words[word_index][word_length] = '\0';
-                word_index++;
+                words++;
                 in_word = 0;
             }
         } else {
-            if (!in_word) {
-                in_word = 1;
-                word_start = ptr;
-            }
+            in_word = 1;
         }
     }
-
-    if (in_word) {
-        int word_length = ptr - word_start;
-        words[word_index] = (char *)malloc((word_length + 1) * sizeof(char));
-        if (words[word_index] == NULL) {
-            // Memory allocation failed
-            for (int i = 0; i <= word_index; i++) {
-                free(words[i]);
-            }
-            free(words);
-            return NULL;
-        }
-        strncpy(words[word_index], word_start, word_length);
-        words[word_index][word_length] = '\0';
-        word_index++;
-    }
-
-    words[word_index] = NULL;
     return words;
 }
 
+char **strtow(char *str) {
+    char **split;
+    int i, j = 0, temp = 0, size = 0, words = num_words(str);
+
+    if (words == 0)
+        return (NULL);
+
+    split = (char **)malloc(sizeof(char *) * (words + 1));
+
+    if (split != NULL) {
+        for (i = 0; i <= len(str) && words; i++) {
+            if ((str[i] != ' ') && (str[i] != '\0')) {
+                size++;
+            } else if (((str[i] == ' ') || (str[i] == '\0')) && i && (str[i - 1] != ' ')) {
+                split[j] = (char *)malloc(sizeof(char) * (size + 1));
+                if (split[j] != NULL) {
+                    for (int k = temp; k < i; k++) {
+                        split[j][k - temp] = str[k];
+                    }
+                    split[j][size] = '\0';
+                    size = 0;
+                    temp = i;
+                    j++;
+                    words--;
+                } else {
+                    // Memory allocation failed
+                    for (int k = 0; k < j; k++) {
+                        free(split[k]);
+                    }
+                    free(split);
+                    return NULL;
+                }
+            }
+        }
+        split[j] = NULL;
+    }
+
+    return split;
+}
